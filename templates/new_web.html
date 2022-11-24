@@ -1,0 +1,82 @@
+<html>
+<head>
+  <title>Video player</title>
+<style type="text/css">
+   body { margin: 0; }
+   #sidebar, #content { position: absolute; } 
+   #sidebar, #content { overflow: auto; padding: 10px; }
+   #header {
+    height: 80px; /* Высота слоя */
+    background: #FFFFFF; border-bottom: 2px solid #7B5427;
+   }
+   #header h1 { padding: 20px; margin: 0; }
+   #sidebar { 
+    width: 640px; background: #ECF5E4; border-right: 1px solid #231F20;
+    top: 82px; /* Расстояние от верхнего края */ 
+    bottom: 0; /* Расстояние снизу  */
+    margin-left: -40px; 
+   }
+   #content {
+    top: 82px; /* Расстояние от верхнего края */
+    left: 700px; /* Расстояние от левого края */ 
+    bottom: 0; right: 0;
+   }
+ </style>
+  <link href="https://vjs.zencdn.net/7.7.5/video-js.css" rel="stylesheet" />
+  <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+  <script>
+  var player=null;
+  function onload(){
+    
+    player = videojs('video_player', {
+    autoplay: 'muted',
+    controls: true,
+    playbackRates: [0.5, 1,0.25],
+    });
+    player.defaultPlaybackRate(0.25)
+    player.bigPlayButton.hide()
+  //var video_player_list=document.getElementByClassName("video"),
+  links=document.getElementsByClassName("video_href");
+    for (var i=0; i<links.length; i++){
+    links[i].onclick=handler;
+    }
+  }
+
+  function handler(e){
+    
+    e.preventDefault();
+    videotarget=this.getAttribute("href");
+    player.src(videotarget)
+    player.play()
+    player.playbackRate("0.25")
+    //filename=videotarget.substr(0,videotarget.lastIndexOf('.'))||videotarget;
+    //#video=document.querySelector("#video_player video");
+    //#video.removeAttribute('poster');
+    //source=document.querySelectorAll("#video_player video source");
+    //source[0].src=filename + ".mp4";
+    //source[1].src=filename + ".webm";
+    //video.load();
+    //video.play();
+  }
+
+  </script>
+</head>
+<body onload=onload()>
+<div id="header"><h1>DO YOU KNOW WHO'S WATCHING YOU?</h1>
+  <figure >
+    <div id="sidebar">
+    <video class="video-js" id="video_player" width="640" height="480" controls=controls poster="/static/poster.jpg"></video>
+    
+    </div>
+    <div id="content">
+    <figcaption class="video">
+      <ul>
+        {% autoescape off %} {{hrefs}} {% endautoescape %}
+      </ul>
+    </figcaption>
+    </div>
+  </figure>
+</div>
+   <script src="https://vjs.zencdn.net/7.7.5/video.js"></script>
+</body>
+</html> 
